@@ -23,11 +23,29 @@ class LinkedList {
                 }    
             }
         }
-        LinkedList& operator << (int new_value){
-            LinkedList *append = new LinkedList(new_value, NULL);
-            cout << "Operator << adding " << append->value << endl;
-            this->getLastListItem().next = append;
+        LinkedList& push(int new_value){
+            LinkedList *append = new LinkedList(new_value,NULL);
+            this->get_last_list_item().next = append;
             return *this;
+        }
+        LinkedList& pop(){
+            LinkedList *second = &this->get_second_to_last_item();
+            LinkedList *last = &this->get_last_list_item();
+            second->next = NULL;
+            last->next = NULL;
+            return *last;
+        }
+        // Still not functional
+        LinkedList& pop(int index){
+            LinkedList* before = &this[index - 1];
+            LinkedList* target = &this[index];
+            cout << "POP PRINT START" << endl;
+            cout << before->value << " " << target->value << endl;
+            cout << "POP PRINT END" << endl;
+            return *target;
+        }
+        LinkedList& operator << (int new_value){
+            return this->push(new_value);
         }
         LinkedList& operator [] (int index) {
             LinkedList *traverser = this;
@@ -44,10 +62,16 @@ class LinkedList {
             } cout << traverser->value << " " << traverser->next << endl;
         }
     private:
-        LinkedList& getLastListItem(){
-            cout << "getLastListItem beign called" << endl;
+        LinkedList& get_last_list_item(){
+            // cout << "get_last_list_item beign called" << endl;
             LinkedList *traverser = this;
             while (traverser->next != NULL) {
+                traverser = traverser->next;
+            } return *traverser;
+        }
+        LinkedList& get_second_to_last_item(){
+            LinkedList *traverser = this;
+            while (traverser->next->next != NULL){
                 traverser = traverser->next;
             } return *traverser;
         }
@@ -62,7 +86,9 @@ class LinkedList {
 int main() {
     LinkedList list = LinkedList(25);
     list << 5 << 9;
-    cout << list[7].value << endl;
+    cout << list[10].value << endl;
+    list.print();
+    cout << list.pop(18).value << endl;
     list.print();
     return 0;
 }
