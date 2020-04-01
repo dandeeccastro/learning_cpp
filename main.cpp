@@ -23,16 +23,19 @@ class LinkedList {
                 }    
             }
         }
-        void operator << (int new_value){
+        LinkedList& operator << (int new_value){
             LinkedList *append = new LinkedList(new_value, NULL);
             cout << "Operator << adding " << append->value << endl;
             this->getLastListItem().next = append;
+            return *this;
         }
-
-        void operator = (int new_value){
-            this->value = new_value;
+        LinkedList& operator [] (int index) {
+            LinkedList *traverser = this;
+            while (index > 0){
+                traverser = traverser->next;
+                index--;
+            } return *traverser;
         }
-
         void print(){
             LinkedList *traverser = this;
             while (traverser->next != NULL){
@@ -52,11 +55,14 @@ class LinkedList {
 
 /**
  * Desafios de aprender c++:
- * - Fazer minha classe stackar operador de append (list << 5 << 7)
+ * 
+ * - Fazer mais estruturas de dados
+ * 
  **/
 int main() {
     LinkedList list = LinkedList(25);
+    list << 5 << 9;
+    cout << list[7].value << endl;
     list.print();
-    list << 5;
-    list.print();
+    return 0;
 }
