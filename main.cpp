@@ -35,24 +35,25 @@ class LinkedList {
             last->next = NULL;
             return *last;
         }
-        // Still not functional
-        LinkedList& pop(int index){
-            LinkedList* before = &this[index - 1];
-            LinkedList* target = &this[index];
-            cout << "POP PRINT START" << endl;
-            cout << before->value << " " << target->value << endl;
-            cout << "POP PRINT END" << endl;
-            return *target;
-        }
-        LinkedList& operator << (int new_value){
-            return this->push(new_value);
-        }
         LinkedList& operator [] (int index) {
             LinkedList *traverser = this;
             while (index > 0){
                 traverser = traverser->next;
                 index--;
             } return *traverser;
+        }
+        LinkedList& pop(int index){
+            LinkedList* before = this;
+            while (index - 1 > 0){
+                before = before->next;
+                index--;
+            } LinkedList* target = before->next;
+            before->next = target->next;
+            target->next = NULL;
+            return *target;
+        }
+        LinkedList& operator << (int new_value){
+            return this->push(new_value);
         }
         void print(){
             LinkedList *traverser = this;
