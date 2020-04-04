@@ -36,18 +36,11 @@ class LinkedList {
             return *last;
         }
         LinkedList& operator [] (int index) {
-            LinkedList *traverser = this;
-            while (index > 0){
-                traverser = traverser->next;
-                index--;
-            } return *traverser;
+            return this->get_item_by_index(index);
         }
         LinkedList& pop(int index){
-            LinkedList* before = this;
-            while (index - 1 > 0){
-                before = before->next;
-                index--;
-            } LinkedList* target = before->next;
+            LinkedList* before = &this->get_item_by_index(index - 1);
+            LinkedList* target = before->next;
             before->next = target->next;
             target->next = NULL;
             return *target;
@@ -62,9 +55,12 @@ class LinkedList {
                 traverser = traverser->next;
             } cout << traverser->value << " " << traverser->next << endl;
         }
+        void debug(int index) {
+            LinkedList* result = &this->get_item_by_index(index);
+            cout << result << endl;
+        }
     private:
         LinkedList& get_last_list_item(){
-            // cout << "get_last_list_item beign called" << endl;
             LinkedList *traverser = this;
             while (traverser->next != NULL) {
                 traverser = traverser->next;
@@ -76,20 +72,26 @@ class LinkedList {
                 traverser = traverser->next;
             } return *traverser;
         }
+        LinkedList& get_item_by_index(int index) {
+            LinkedList *traverser = this;
+            while (index > 0) {
+                traverser = traverser->next;
+                index--;
+            } return *traverser;
+        }
 };
 
 /**
  * Desafios de aprender c++:
  * 
  * - Fazer mais estruturas de dados
- * 
+ * - Criar método privado para pegar item baseado no indice
+ * - 
  **/
 int main() {
     LinkedList list = LinkedList(25);
     list << 5 << 9;
     cout << list[10].value << endl;
-    list.print();
-    cout << list.pop(18).value << endl;
-    list.print();
+    cout << list.pop(4).value << endl;
     return 0;
 }
