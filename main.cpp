@@ -2,7 +2,6 @@
 using namespace std;
 
 class LinkedList {
-
     public:
         int value;
         LinkedList* next;
@@ -88,6 +87,30 @@ class LinkedList {
         }
 };
 
+class DoubledLinkedList {
+    public:
+        DoubledLinkedList* prev;
+        int value;
+        DoubledLinkedList* next;
+
+        DoubledLinkedList (int new_value, DoubledLinkedList* new_prev, DoubledLinkedList* new_next) {
+            prev = new_prev;
+            value = new_value;
+            next = new_next;
+        }
+        DoubledLinkedList (signed int size) {
+            *this = DoubledLinkedList(0,NULL,NULL);
+            DoubledLinkedList* traverser = this;
+           if (size > 1){ 
+                for (int i = 0; i < size; i++){
+                    DoubledLinkedList* new_item = new DoubledLinkedList(i,traverser,NULL);
+                    traverser->next = new_item;
+                    new_item->prev = traverser;
+                    traverser = traverser->next;
+                }
+            }
+        }
+};
 /**
  * Desafios de aprender c++:
  * 
