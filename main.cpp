@@ -58,6 +58,18 @@ class LinkedList {
             } if (traverser->value != value) traverser = NULL;
             return *traverser;
         }
+        LinkedList& reverse(){
+            LinkedList* current = this->next;
+            LinkedList* head = this->next;
+            LinkedList* next = NULL;
+            while (current->next != NULL) {
+                next = current->next;
+                current->next = next->next;
+                next->next = head;
+                head = next;
+            } 
+            return *next;
+        }
         void print(){
             LinkedList *traverser = this;
             while (traverser->next != NULL){
@@ -120,10 +132,9 @@ class DoubledLinkedList {
  **/
 int main() {
     LinkedList list = LinkedList(25);
-    list << 5 << 9;
-    cout << list[10].value << endl;
-    cout << list.pop(4).value << endl;
-    LinkedList item = list.search(10);
-    cout << item.value << endl;
+    list << 5 << 9 << 7;
+    list.print();
+    list = list.reverse();
+    list.print();
     return 0;
 }
